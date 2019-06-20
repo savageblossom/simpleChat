@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple login</title>
+  <meta charset="utf-8" />
+  <script>
+
+      function transfer() {
+        const data = document.getElementById('text').value;
+
+        const HTTP = new XMLHttpRequest();
+        const url = 'http://localhost:3000/getData';
+
+        HTTP.open("POST", url, true);
+        HTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded ");
+        HTTP.onreadystatechange = function() {
+          if(HTTP.readyState == 4 && HTTP.status == 200) {
+            alert(HTTP.responseText);
+          }
+        }
+        HTTP.send("data="+data)
+      }
+
+      function refresh() {
+        const HTTP = new XMLHttpRequest();
+        const url = 'http://localhost:3000/refresh';
+
+        HTTP.open("GET", url, true);
+        var promise = new Promise((resolve, reject) => {
+          resolve("<%= name %>");
+        }).then(function(data) {
+          var name = "<%= name %>";
+          alert("<%= name %>");
+        })
+      }
+  </script>
+</head>
+
+<body>
+  <h1>Enter something</h1>
+  <textarea name="name" rows="8" cols="80" id='text'></textarea>
+  <button onclick="transfer();">Transfer data to server!</button>
+  <button onclick="refresh();">Transfer data to server!</button>
+
+</body>
+
+</html>
